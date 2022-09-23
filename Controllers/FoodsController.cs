@@ -34,18 +34,7 @@ namespace APIProject.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Food>> GetFoodById(int id)
         {
-            //if (_context.Food == null)
-            //{
-            //    return NotFound();
-            //}
-            //var food = await _context.Food.FindAsync(id);
-
-            //if (food == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return food;
+           
             if(id<=0)
             {
                 return BadRequest();
@@ -58,34 +47,13 @@ namespace APIProject.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditFood(int id, Food food)
         {
-            //if (id != food.FoodId)
-            //{
-            //    return BadRequest();
-            //}
-
-            //_context.Entry(food).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //if (!FoodExists(id))
-            //{
-            //    return NotFound();
-            //}
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
+           
             if(!ModelState.IsValid||id<=0)
             {
                 return BadRequest();
             }
             var response=await prod.EditFood(id, food).ConfigureAwait(false);
-            return response!=null?Ok(response):NotFound();
+            return response?Ok(response):NotFound();
         }
 
         // POST: api/Foods
@@ -104,32 +72,18 @@ namespace APIProject.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFood(int id)
         {
-            //        if (_context.Food == null)
-            //        {
-            //            return NotFound();
-            //        }
-            //        var food = await _context.Food.FindAsync(id);
-            //        if (food == null)
-            //        {
-            //            return NotFound();
-            //        
-
-            //        _context.Food.Remove(food);
-            //        await _context.SaveChangesAsync();
+          
             if (id <= 0)
             {
                 return BadRequest();
             }
             var response =await prod.DeleteFood(id).ConfigureAwait(false);
-            return response!=null ? NotFound() :NoContent() ;
+            return response ? NoContent() :NotFound() ;
            
 
         }
 
-        //    private bool FoodExists(int id)
-        //    {
-        //        return (_context.Food?.Any(e => e.FoodId == id)).GetValueOrDefault();
-        //    }
+      
         [HttpGet("NewOrder")]
 
         public async Task<ActionResult<List<NewOrder>>> NewOrder()

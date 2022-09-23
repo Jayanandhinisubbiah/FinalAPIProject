@@ -7,7 +7,7 @@ namespace APIProject.Provider
     {
         public UserList AddNewUser(UserList U);
         public void Edit(int CartId, Cart C);
-        public Task<string> EditFood(int Id, Food C);
+        public Task<bool> EditFood(int Id, Food C);
 
         public void DeleteCart(int CartId);
         public UserList Login(UserList U);
@@ -34,7 +34,7 @@ namespace APIProject.Provider
 
         public Cart GetCartByCartId(int CartId);
 
-        public Task<string> DeleteFood(int FoodId);
+        public Task<bool> DeleteFood(int FoodId);
         public List<UserList> UserDetails();
 
         public List<Content> GetReportById(int? UserId);

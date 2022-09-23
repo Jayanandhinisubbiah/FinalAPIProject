@@ -224,7 +224,7 @@ namespace APIProject.Provider
             fd.SaveChanges();
         }
 
-        public async Task<string> EditFood(int id, Food food)
+        public async Task<bool> EditFood(int id, Food food)
         {
             //if (id != food.FoodId)
             //{
@@ -249,14 +249,14 @@ namespace APIProject.Provider
             //        throw;
             //    }
             //}
-            return null;
+            return true;
         }
-        public async Task<string> DeleteFood(int FoodId)
+        public async Task<bool> DeleteFood(int FoodId)
         {
             Food c = fd.Food.Find(FoodId);
              fd.Remove(c);
             await fd.SaveChangesAsync();
-            return null;
+            return true;
         }
         public List<UserList> UserDetails()
         {
