@@ -375,7 +375,7 @@ namespace APIProject.Provider
             return await fd.NewOrder.FirstOrDefaultAsync(m => m.Id == Id);
 
         }
-        public async Task<string> EmptyOrder(int OrderId)
+        public async Task<bool> EmptyOrder(int OrderId)
         {
             List<OrderDetails> list = (from i in fd.OrderDetails
                                        where i.OrderId == OrderId
@@ -400,7 +400,7 @@ namespace APIProject.Provider
                 fd.OrderMaster.Remove(val);
                 await fd.SaveChangesAsync();
             }
-            return null;
+            return true;
         }
 
     }

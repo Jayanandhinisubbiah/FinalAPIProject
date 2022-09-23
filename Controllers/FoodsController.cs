@@ -86,7 +86,7 @@ namespace APIProject.Controllers
       
         [HttpGet("NewOrder")]
 
-        public async Task<ActionResult<List<NewOrder>>> NewOrder()
+        public async Task<ActionResult<List<NewOrder>>> GetNewOrder()
         {
             var response = await prod.ViewNewOrder().ConfigureAwait(false);
             return response != null ? Ok(response) : NotFound();
@@ -121,7 +121,7 @@ namespace APIProject.Controllers
                 return BadRequest();
             }
             var response = await prod.EmptyOrder(OrderId).ConfigureAwait(false);
-            return response != null ? NotFound() : NoContent();
+            return response ? NoContent() : NotFound();
 
         }
 

@@ -21,7 +21,7 @@ namespace APIProject.Provider
         public Task<NewOrder> DispatchNewOrder(int Id);
         public void DeleteConfirmed(int CartId);
         public void EmptyList(int UserId);
-        public Task<string> EmptyOrder(int OrderId);
+        public Task<bool> EmptyOrder(int OrderId);
 
         public List<OrderDetails> OrderDetails();
         public OrderMaster Buy(int UserId);
