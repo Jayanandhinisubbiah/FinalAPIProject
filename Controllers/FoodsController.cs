@@ -91,6 +91,7 @@ namespace APIProject.Controllers
             var response = await prod.ViewNewOrder().ConfigureAwait(false);
             return response != null ? Ok(response) : NotFound();
         }
+        
         [HttpGet("DispatchNewOrder{Id}")]
         public async Task<ActionResult<NewOrder>> DispatchNewOrder(int Id)
         {
@@ -101,7 +102,7 @@ namespace APIProject.Controllers
             var response = await prod.DispatchNewOrder(Id).ConfigureAwait(false);
             return response != null ? Ok(response) : NotFound();
         }
-        [HttpDelete("DispatchOrder{Id}")]
+        [HttpPut("DispatchOrder{Id}")]
 
         public async Task<IActionResult> DispatchOrder(int Id)
         {
@@ -124,6 +125,7 @@ namespace APIProject.Controllers
             return response ? NoContent() : NotFound();
 
         }
+
 
     }
 }

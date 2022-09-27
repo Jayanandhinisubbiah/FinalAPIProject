@@ -346,6 +346,7 @@ namespace APIProject.Provider
                 od.Price = Y.Price;
                 //od.status = "Dispatch";
                 od.TotalPrice = Y.TotalPrice;
+                od.Status = "Dispatch";
                 fd.NewOrder.Add(od);
                 fd.SaveChanges();
             };
@@ -362,10 +363,11 @@ namespace APIProject.Provider
         }
         public async Task<bool> DispatchOrder(int Id)
         {
+            
             NewOrder c = fd.NewOrder.Find(Id);
-            fd.NewOrder.Remove(c);
-
-            await fd.SaveChangesAsync();
+            c.Status = "Order Dispatched";
+            fd.Update(c);
+            fd.SaveChanges();
             return true;
         }
 
