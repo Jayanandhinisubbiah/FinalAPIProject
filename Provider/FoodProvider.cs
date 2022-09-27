@@ -360,14 +360,13 @@ namespace APIProject.Provider
             return ct;
 
         }
-        public async Task<string> DispatchOrder(int Id)
+        public async Task<bool> DispatchOrder(int Id)
         {
             NewOrder c = fd.NewOrder.Find(Id);
             fd.NewOrder.Remove(c);
-            //c.count--;
 
             await fd.SaveChangesAsync();
-            return null;
+            return true;
         }
 
         public async Task<NewOrder> DispatchNewOrder(int Id)

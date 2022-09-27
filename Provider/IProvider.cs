@@ -39,7 +39,7 @@ namespace APIProject.Provider
 
         public List<Content> GetReportById(int? UserId);
         public Task<List<NewOrder>> ViewNewOrder();
-        public Task<string> DispatchOrder(int Id);
+        public Task<bool> DispatchOrder(int Id);
 
 
     }

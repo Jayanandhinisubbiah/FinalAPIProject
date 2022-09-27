@@ -110,7 +110,7 @@ namespace APIProject.Controllers
                 return BadRequest();
             }
             var response = await prod.DispatchOrder(Id).ConfigureAwait(false);
-            return response != null ? NotFound() : NoContent();
+            return response  ? NoContent() : NotFound();
             
         }
         [HttpDelete("EmptyOrder{OrderId}")]
