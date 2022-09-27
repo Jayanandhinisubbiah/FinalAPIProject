@@ -266,52 +266,52 @@ namespace APIProject.Provider
             return C;
         }
 
-        public List<Content> GetReportById(int? UserId)
-        {
+        //public List<Content> GetReportById(int? UserId)
+        //{
 
-            var O = (from i in fd.OrderMaster
-                     where i.UserId == UserId
-                     select i).ToList();
-            List<Content> ct = new List<Content>();
-            foreach (var k in O)
-            {
-                List<OrderDetails> list =
-                (from i in fd.OrderDetails
-                 where i.OrderId == k.OrderId
-                 select i).ToList();
-                //}
-                //Content content = new Content();
+        //    var O = (from i in fd.OrderMaster
+        //             where i.UserId == UserId
+        //             select i).ToList();
+        //    List<Content> ct = new List<Content>();
+        //    foreach (var k in O)
+        //    {
+        //        List<OrderDetails> list =
+        //        (from i in fd.OrderDetails
+        //         where i.OrderId == k.OrderId
+        //         select i).ToList();
+        //        //}
+        //        //Content content = new Content();
 
-                foreach (var item in list)
-                {
+        //        foreach (var item in list)
+        //        {
 
-                    var T = fd.Food.SingleOrDefault(i => i.FoodId == item.FoodId);
-                    var Y = fd.OrderDetails.SingleOrDefault(i => i.FoodId == item.FoodId);
-                    var F = fd.UserList.Find(UserId);
+        //            var T = fd.Food.SingleOrDefault(i => i.FoodId == item.FoodId);
+        //            var Y = fd.OrderDetails.SingleOrDefault(i => i.FoodId == item.FoodId);
+        //            var F = fd.UserList.Find(UserId);
 
-                    Content od = new Content();
-
-
-                    od.Email = F.Email;
-
-                    od.FoodName = T.FoodName;
-                    od.Image = T.Image;
-                    od.Qnt = Y.Qnt;
-                    od.Price = Y.Price;
-
-                    od.TotalPrice = Y.TotalPrice;
-                    fd.SaveChanges();
-                    ct.Add(od);
-                };
-
-            }
-
-            fd.SaveChanges();
+        //            Content od = new Content();
 
 
-            return ct;
+        //            od.Email = F.Email;
 
-        }
+        //            od.FoodName = T.FoodName;
+        //            od.Image = T.Image;
+        //            od.Qnt = Y.Qnt;
+        //            od.Price = Y.Price;
+
+        //            od.TotalPrice = Y.TotalPrice;
+        //            fd.SaveChanges();
+        //            ct.Add(od);
+        //        };
+
+        //    }
+
+        //    fd.SaveChanges();
+
+
+        //    return ct;
+
+        //}
 
         public async Task<List<NewOrder>> ViewNewOrder()
         {
@@ -319,12 +319,7 @@ namespace APIProject.Provider
 
             List<NewOrder> ct = new List<NewOrder>();
 
-            //od.count = list.Count;
-
-            //for (int i=1;i<=list.Count;i++)
-            //{
-            //    od.count = i;
-            //}
+           
                 foreach (var item in list)
             {
 
@@ -347,11 +342,12 @@ namespace APIProject.Provider
                 //od.status = "Dispatch";
                 od.TotalPrice = Y.TotalPrice;
                 od.Status = "Dispatch";
-                fd.NewOrder.Add(od);
+                ct.AddRange(fd.NewOrder);
                 fd.SaveChanges();
+
             };
-            
-            ct.AddRange(fd.NewOrder);
+
+
 
 
 

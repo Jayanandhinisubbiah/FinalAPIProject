@@ -37,7 +37,7 @@ namespace APIProject.Provider
         public Task<bool> DeleteFood(int FoodId);
         public List<UserList> UserDetails();
 
-        public List<Content> GetReportById(int? UserId);
+        //public List<Content> GetReportById(int? UserId);
         public Task<List<NewOrder>> ViewNewOrder();
         public Task<bool> DispatchOrder(int Id);
 

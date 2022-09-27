@@ -117,12 +117,12 @@ namespace APIProject.Controllers
         //{
         //    return (_context.UserList?.Any(e => e.UserId == id)).GetValueOrDefault();
         //}
-        [HttpGet("ViewReport{UserId}")]
+        //[HttpGet("ViewReport{UserId}")]
 
-        public ActionResult<List<Content>> ViewReport(int UserId)
-        {
+        //public ActionResult<List<Content>> ViewReport(int UserId)
+        //{
 
-            return prod.GetReportById(UserId);
-        }
+        //    return prod.GetReportById(UserId);
+        //}
     }
 }
