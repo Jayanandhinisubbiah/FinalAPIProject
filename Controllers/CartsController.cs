@@ -124,8 +124,12 @@ namespace APIProject.Controllers
         [HttpGet("AddtoCart{id}")]
         public async Task<ActionResult<Food>> AddtoCart(int? id)
         {
-
-            return await prod.GetFoodById(id);
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            var response = await prod.GetFoodById(id).ConfigureAwait(false);
+            return response != null ? Ok(response) : NotFound();
         }
         #endregion
         //[HttpPost]
@@ -139,7 +143,12 @@ namespace APIProject.Controllers
         [Route("AddtoCart")]
         public ActionResult<Cart> AddtoCart(Cart C)
         {
-            return prod.AddtoCart(C);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var response = await prod.AddtoCart(C).ConfigureAwait(false);
+            return response!=null?Ok(response);
             //return new JsonResult(C);
         }
         //[HttpPost]

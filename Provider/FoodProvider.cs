@@ -41,7 +41,7 @@ namespace APIProject.Provider
         //    return C;
         //}
 
-        public Cart AddtoCart(Cart C)
+        public async Task<Cart> AddtoCart(Cart C)
         {
             Cart T = new Cart();
             var F = fd.Food.FirstOrDefault(i => i.FoodId == C.FoodId);
@@ -50,7 +50,7 @@ namespace APIProject.Provider
             T.FoodId = F.FoodId;
             T.Qnt = C.Qnt;
             fd.Add(T);
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
             return T;
         }
         #endregion
