@@ -6,7 +6,7 @@ namespace APIProject.Models
     public class UserList
     {
         [Key]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string Role { get; set; }
         public string FName { get; set; }
         public string? Lname { get; set; }

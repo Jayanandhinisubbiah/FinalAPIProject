@@ -25,28 +25,30 @@ namespace APIProject.Controllers
        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
        [HttpPost]
         [Route("Registration")]
-        public ActionResult<UserList> PostUserList(UserList userList)
+        public async Task<ActionResult<UserList>> PostUserList(UserList userList)
         {
-
-            prod.AddNewUser(userList);
-            //return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            await prod.AddNewUser(userList).ConfigureAwait(false);
 
             
             return userList;
-            //return CreatedAtAction("GetUserList", new { id = userList.UserId }, userList);
         }
 
 
 
-        //private bool UserListExists(int id)
-        //{
-        //    return (_context.UserList?.Any(e => e.UserId == id)).GetValueOrDefault();
-        //}
+        
         [HttpPost]
         [Route("Login")]
-        public ActionResult<UserList> LoginUser(UserList userList)
+        public async Task<ActionResult<UserList>> LoginUser(UserList userList)
         {
-            UserList user=prod.Login(userList);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            UserList user=await prod.Login(userList).ConfigureAwait(false);
             return user;
         }
     }

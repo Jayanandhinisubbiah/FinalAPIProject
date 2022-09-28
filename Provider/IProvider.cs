@@ -5,12 +5,12 @@ namespace APIProject.Provider
 {
     public interface IProvider
     {
-        public UserList AddNewUser(UserList U);
+        public Task<UserList> AddNewUser(UserList U);
         public void Edit(int CartId, Cart C);
         public Task<bool> EditFood(int Id, Food C);
 
         public void DeleteCart(int CartId);
-        public UserList Login(UserList U);
+        public Task<UserList> Login(UserList U);
         public  Task<List<Food>> GetAll();
         public Task<Food> GetFoodById(int? id);
 

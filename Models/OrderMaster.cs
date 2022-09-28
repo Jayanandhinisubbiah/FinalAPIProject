@@ -19,6 +19,7 @@ namespace APIProject.Models
         public int? CCV { get; set; }
         public virtual UserList? User { get; set; }
         public virtual ICollection<OrderDetails>? OrderDetails { get; set; }
+        public virtual ICollection<NewOrder>? NewOrder { get; set; }
         //public virtual NewOrder? NewOrder { get; set; }
 
     }

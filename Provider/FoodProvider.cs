@@ -16,10 +16,10 @@ namespace APIProject.Provider
             this.fd = fd;
         }
 
-        public UserList AddNewUser(UserList U)
+        public async Task<UserList> AddNewUser(UserList U)
         {
             fd.UserList.Add(U);
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
             return U;
         }
         #region
@@ -117,11 +117,11 @@ namespace APIProject.Provider
             return await fd.Food.FindAsync(id);
         }
 
-        public UserList Login(UserList U)
+        public async Task<UserList> Login(UserList U)
         {
-            var result = (from i in fd.UserList
+            var result = await (from i in fd.UserList
                           where i.FName == U.FName && i.Password == U.Password && i.Role == U.Role
-                          select i).SingleOrDefault();
+                          select i).SingleOrDefaultAsync();
 
             return result;
 
@@ -329,7 +329,7 @@ namespace APIProject.Provider
                 //      where i.OrderId==item.OrderId
                 //      select i.User.Email);
                 var F = fd.OrderMaster.SingleOrDefault(i => i.OrderId == item.OrderId);
-                var L = fd.UserList.Find(F.UserId);
+                var L =fd.UserList.Find(F.UserId);
                 NewOrder od = new NewOrder();
 
 
