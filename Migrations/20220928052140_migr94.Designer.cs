@@ -4,6 +4,7 @@ using APIProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIProject.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    partial class FoodContextModelSnapshot : ModelSnapshot
+    [Migration("20220928052140_migr94")]
+    partial class migr94
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,15 +41,9 @@ namespace APIProject.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserListUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("CartId");
 
-                    b.HasIndex("FoodId")
-                        .IsUnique();
-
-                    b.HasIndex("UserListUserId");
+                    b.HasIndex("FoodId");
 
                     b.ToTable("Cart");
                 });
@@ -104,6 +100,9 @@ namespace APIProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderDetailsId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -122,6 +121,8 @@ namespace APIProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderDetailsId");
+
                     b.ToTable("NewOrder");
                 });
 
@@ -133,10 +134,10 @@ namespace APIProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("FoodId")
+                    b.Property<int>("FoodId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int?>("OrderMasterOrderId")
@@ -188,9 +189,7 @@ namespace APIProject.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.ToTable("OrderMaster");
                 });
@@ -205,6 +204,9 @@ namespace APIProject.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -232,33 +234,38 @@ namespace APIProject.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("CartId");
+
                     b.ToTable("UserList");
                 });
 
             modelBuilder.Entity("APIProject.Models.Cart", b =>
                 {
                     b.HasOne("APIProject.Models.Food", "Food")
-                        .WithOne("Cart")
-                        .HasForeignKey("APIProject.Models.Cart", "FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("APIProject.Models.UserList", "UserList")
-                        .WithMany("Cart")
-                        .HasForeignKey("UserListUserId")
+                        .WithMany()
+                        .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Food");
+                });
 
-                    b.Navigation("UserList");
+            modelBuilder.Entity("APIProject.Models.NewOrder", b =>
+                {
+                    b.HasOne("APIProject.Models.OrderDetails", "OrderDetails")
+                        .WithMany()
+                        .HasForeignKey("OrderDetailsId");
+
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("APIProject.Models.OrderDetails", b =>
                 {
                     b.HasOne("APIProject.Models.Food", "Food")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("FoodId");
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("APIProject.Models.OrderMaster", "OrderMaster")
                         .WithMany("OrderDetails")
@@ -272,29 +279,34 @@ namespace APIProject.Migrations
             modelBuilder.Entity("APIProject.Models.OrderMaster", b =>
                 {
                     b.HasOne("APIProject.Models.UserList", "User")
-                        .WithOne("OrderMaster")
-                        .HasForeignKey("APIProject.Models.OrderMaster", "UserId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("APIProject.Models.UserList", b =>
+                {
+                    b.HasOne("APIProject.Models.Cart", "Cart")
+                        .WithMany("User")
+                        .HasForeignKey("CartId");
+
+                    b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("APIProject.Models.Cart", b =>
+                {
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("APIProject.Models.Food", b =>
                 {
-                    b.Navigation("Cart");
-
                     b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("APIProject.Models.OrderMaster", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("APIProject.Models.UserList", b =>
-                {
-                    b.Navigation("Cart");
-
-                    b.Navigation("OrderMaster");
                 });
 #pragma warning restore 612, 618
         }

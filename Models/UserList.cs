@@ -23,6 +23,7 @@ namespace APIProject.Models
         [NotMapped]
         [Display(Name = "Confirm Password")]
         public string? CPassword { get; set; }
-        public virtual Cart? Cart { get; set; }
+        public virtual ICollection<Cart>? Cart { get; set; }
+        public virtual OrderMaster? OrderMaster { get; set; }
     }
 }

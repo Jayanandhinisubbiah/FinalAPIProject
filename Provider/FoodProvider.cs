@@ -334,7 +334,7 @@ namespace APIProject.Provider
 
 
                 od.Email = L.Email;
-                od.OrderId=item.OrderId;
+                od.OrderId= (int)item.OrderId;
                 od.FoodName = T.FoodName;
                 od.Image = T.Image;
                 od.Qnt = Y.Qnt;

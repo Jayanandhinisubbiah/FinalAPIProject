@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APIProject.Models
 {
@@ -6,6 +7,7 @@ namespace APIProject.Models
     {
         [Key]
         public int OrderId { get; set; }
+        [ForeignKey("UserId")]
         public int? UserId { get; set; }
         public float TotalPrice { get; set; }
         [Display(Name = "Payment Type")]
@@ -13,9 +15,11 @@ namespace APIProject.Models
         public string? BankName { get; set; }
 
         public string? CardNo { get; set; }
+
         public int? CCV { get; set; }
         public virtual UserList? User { get; set; }
         public virtual ICollection<OrderDetails>? OrderDetails { get; set; }
+        //public virtual NewOrder? NewOrder { get; set; }
 
     }
 }

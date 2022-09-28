@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace APIProject.Models
 {
@@ -12,5 +13,6 @@ namespace APIProject.Models
         public string Image { get; set; }
         public string Detail { get; set; }
         public virtual ICollection<OrderDetails>? OrderDetails { get; set; }
+        public virtual Cart? Cart { get; set; }
     }
 }

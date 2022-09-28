@@ -4,6 +4,7 @@ using APIProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIProject.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    partial class FoodContextModelSnapshot : ModelSnapshot
+    [Migration("20220928063447_migr73")]
+    partial class migr73
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,15 +41,10 @@ namespace APIProject.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserListUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("CartId");
 
                     b.HasIndex("FoodId")
                         .IsUnique();
-
-                    b.HasIndex("UserListUserId");
 
                     b.ToTable("Cart");
                 });
@@ -206,6 +203,9 @@ namespace APIProject.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -232,6 +232,8 @@ namespace APIProject.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("CartId");
+
                     b.ToTable("UserList");
                 });
 
@@ -243,15 +245,7 @@ namespace APIProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("APIProject.Models.UserList", "UserList")
-                        .WithMany("Cart")
-                        .HasForeignKey("UserListUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Food");
-
-                    b.Navigation("UserList");
                 });
 
             modelBuilder.Entity("APIProject.Models.OrderDetails", b =>
@@ -278,9 +272,24 @@ namespace APIProject.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("APIProject.Models.UserList", b =>
+                {
+                    b.HasOne("APIProject.Models.Cart", "Cart")
+                        .WithMany("User")
+                        .HasForeignKey("CartId");
+
+                    b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("APIProject.Models.Cart", b =>
+                {
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("APIProject.Models.Food", b =>
                 {
-                    b.Navigation("Cart");
+                    b.Navigation("Cart")
+                        .IsRequired();
 
                     b.Navigation("OrderDetails");
                 });
@@ -292,8 +301,6 @@ namespace APIProject.Migrations
 
             modelBuilder.Entity("APIProject.Models.UserList", b =>
                 {
-                    b.Navigation("Cart");
-
                     b.Navigation("OrderMaster");
                 });
 #pragma warning restore 612, 618

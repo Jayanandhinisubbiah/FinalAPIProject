@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APIProject.Models
 {
@@ -18,6 +19,5 @@ namespace APIProject.Models
         public int Qnt { get; set; }
         public float TotalPrice { get; set; }
         public string Status { get; set; }
-        public virtual OrderDetails? OrderDetails { get; set; }
     }
 }
