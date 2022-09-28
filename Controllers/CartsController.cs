@@ -148,7 +148,7 @@ namespace APIProject.Controllers
                 return BadRequest();
             }
             var response = await prod.AddtoCart(C).ConfigureAwait(false);
-            return response!=null?Ok(response);
+            return response;
             //return new JsonResult(C);
         }
         //[HttpPost]
