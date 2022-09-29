@@ -23,13 +23,13 @@ namespace APIProject.Provider
         public Task<bool> EmptyList(int UserId);
         public Task<bool> EmptyOrder(int OrderId);
 
-        public List<OrderDetails> OrderDetails();
-        public OrderMaster Buy(int UserId);
-        public OrderMaster Payment(int OrderId, string Type);
+        public Task<List<OrderDetails>> OrderDetails();
+        public Task<OrderMaster> Buy(int UserId);
+        public Task<OrderMaster> Payment(int OrderId, string Type);
        
         public void Pay(int OrderId, OrderMaster O);
 
-        public OrderMaster Pay(int OrderId);
+        public Task<OrderMaster> Pay(int OrderId);
         public Task<Food> AddNewFood(Food food);
 
         public Cart GetCartByCartId(int CartId);

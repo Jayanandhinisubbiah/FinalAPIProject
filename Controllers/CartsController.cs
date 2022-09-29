@@ -218,37 +218,47 @@ namespace APIProject.Controllers
         }
         [HttpGet("OrderDetails")]
 
-        public ActionResult<List<OrderDetails>> OrderDetails()
+        public async Task<ActionResult<List<OrderDetails>>> OrderDetails()
         {
-
-            return prod.OrderDetails();
+            var response = await prod.OrderDetails().ConfigureAwait(false);
+            return response != null ? Ok(response) : NotFound();
         }
         [HttpGet("Buy{UserId}")]
 
-        public ActionResult<OrderMaster> Buy(int UserId)
+        public async Task<ActionResult<OrderMaster>> Buy(int UserId)
         {
 
-            return prod.Buy(UserId);
+           
+            var response = await prod.Buy(UserId).ConfigureAwait(false);
+            return response != null ? Ok(response) : NotFound();
         }
         [HttpPut("Payment{OrderId}")]
         //[HttpPost("Payment")]
 
-        public ActionResult<OrderMaster> Payment(int OrderId,OrderMaster O)
+        public async Task<ActionResult<OrderMaster>> Payment(int OrderId,OrderMaster O)
         {
-
-             return prod.Payment(OrderId,O.Type);
+            if (!ModelState.IsValid || OrderId <= 0)
+            {
+                return BadRequest();
+            }
+            var response = await prod.Payment(OrderId, O.Type).ConfigureAwait(false);
+            return response !=null? Ok(response) : NotFound();
             
         }
         [HttpGet("On{OrderId}")]
 
-        public ActionResult<OrderMaster> On(int OrderId)
+        public async Task<ActionResult<OrderMaster>> On(int OrderId)
         {
-
-            return prod.Pay(OrderId);
+            if (OrderId <= 0)
+            {
+                return BadRequest();
+            }
+            var response = await prod.Pay(OrderId).ConfigureAwait(false);
+            return response != null ? Ok(response) : NotFound();
         }
         [HttpPut("On{OrderId}")]
 
-        public IActionResult On(int OrderId,OrderMaster O)
+        public async Task<IActionResult> On(int OrderId,OrderMaster O)
         {
 
             prod.Pay(OrderId, O);

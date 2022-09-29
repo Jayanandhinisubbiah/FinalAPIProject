@@ -55,13 +55,10 @@ namespace APIProject.Provider
         }
         #endregion
 
-        public OrderMaster Buy(int UserId)
+        public async Task<OrderMaster> Buy(int UserId)
         {
-            return (fd.OrderMaster.FirstOrDefault(m => m.UserId == UserId));
-            // List<OrderMaster> o = (from i in fd.OrderMaster
-            //         where i.UserId == UserId
-            //         select i).ToList();
-            //return o;
+            return await(fd.OrderMaster.FirstOrDefaultAsync(m => m.UserId == UserId));
+           
         }
 
         public async Task<Cart> Delete(int CartId)
@@ -130,9 +127,9 @@ namespace APIProject.Provider
         }
 
 
-        public OrderMaster Pay(int OrderId)
+        public async Task<OrderMaster> Pay(int OrderId)
         {
-            var result = fd.OrderMaster.SingleOrDefault(m => m.OrderId == OrderId);
+            var result = await fd.OrderMaster.SingleOrDefaultAsync(m => m.OrderId == OrderId);
             return result;
         }
 
@@ -145,9 +142,9 @@ namespace APIProject.Provider
             result.CCV = O.CCV;
             fd.SaveChanges();
         }
-        public List<OrderDetails> OrderDetails()
+        public async Task<List<OrderDetails>> OrderDetails()
         {
-            var C = fd.OrderDetails.ToList();
+            var C = await fd.OrderDetails.ToListAsync();
             return C;
         }
 
@@ -157,11 +154,11 @@ namespace APIProject.Provider
         //    result.Type = Type;
         //    fd.SaveChanges();
         //}
-        public OrderMaster Payment(int OrderId, string Type)
+        public async Task<OrderMaster> Payment(int OrderId, string Type)
         {
             var result = fd.OrderMaster.SingleOrDefault(m => m.OrderId == OrderId);
             result.Type = Type;
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
             return result;
         }
 
