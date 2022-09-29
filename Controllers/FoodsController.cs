@@ -27,7 +27,7 @@ namespace APIProject.Controllers
         public async Task <ActionResult<List<Food>>> GetFood()
         {
 
-            var response=await  prod.GetAll().ConfigureAwait(false);
+            var response=await  prod.GetAll();
             return response != null ? Ok(response):NotFound();
         }
 
@@ -39,7 +39,7 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            var response = await prod.GetFoodById(id).ConfigureAwait(false);
+            var response = await prod.GetFoodById(id);
             return response!=null?Ok(response):NotFound();
 
         }
@@ -52,7 +52,7 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            var response=await prod.EditFood(id, food).ConfigureAwait(false);
+            var response=await prod.EditFood(id, food);
             return response?Ok(response):NotFound();
         }
 
@@ -65,7 +65,7 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            var response=await prod.AddNewFood(food).ConfigureAwait(false);
+            var response=await prod.AddNewFood(food);
             return CreatedAtAction("GetFood", new { id = food.FoodId }, food);
         }
 
@@ -77,7 +77,7 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            var response =await prod.DeleteFood(id).ConfigureAwait(false);
+            var response =await prod.DeleteFood(id);
             return response ? NoContent() :NotFound() ;
            
 

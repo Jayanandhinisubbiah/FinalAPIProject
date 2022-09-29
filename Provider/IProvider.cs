@@ -6,10 +6,10 @@ namespace APIProject.Provider
     public interface IProvider
     {
         public Task<UserList> AddNewUser(UserList U);
-        public void Edit(int CartId, Cart C);
+        public Task<bool> Edit(int CartId, Cart C);
         public Task<bool> EditFood(int Id, Food C);
 
-        public void DeleteCart(int CartId);
+        public Task<bool> DeleteCart(int CartId);
         public Task<UserList> Login(UserList U);
         public  Task<List<Food>> GetAll();
         public Task<Food> GetFoodById(int? id);
@@ -27,12 +27,12 @@ namespace APIProject.Provider
         public Task<OrderMaster> Buy(int UserId);
         public Task<OrderMaster> Payment(int OrderId, string Type);
        
-        public void Pay(int OrderId, OrderMaster O);
+        public Task<bool> Pay(int OrderId, OrderMaster O);
 
         public Task<OrderMaster> Pay(int OrderId);
         public Task<Food> AddNewFood(Food food);
 
-        public Cart GetCartByCartId(int CartId);
+        public Task<Cart> GetCartByCartId(int CartId);
 
         public Task<bool> DeleteFood(int FoodId);
         public List<UserList> UserDetails();

@@ -134,13 +134,14 @@ namespace APIProject.Provider
         }
 
 
-        public void Pay(int OrderId, OrderMaster O)
+        public async Task<bool> Pay(int OrderId, OrderMaster O)
         {
             var result = fd.OrderMaster.SingleOrDefault(m => m.OrderId == OrderId);
             result.BankName = O.BankName;
             result.CardNo = O.CardNo;
             result.CCV = O.CCV;
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
+            return true;
         }
         public async Task<List<OrderDetails>> OrderDetails()
         {
@@ -206,22 +207,24 @@ namespace APIProject.Provider
             return food;
         }
 
-        public void Edit(int CartId, Cart C)
+        public async Task<bool> Edit(int CartId, Cart C)
         {
             fd.Cart.Update(C);
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
+            return true;
         }
 
-        public Cart GetCartByCartId(int CartId)
+        public async Task<Cart> GetCartByCartId(int CartId)
         {
-            return (fd.Cart.Find(CartId));
+            return await (fd.Cart.FindAsync(CartId));
         }
 
-        public void DeleteCart(int CartId)
+        public async Task<bool> DeleteCart(int CartId)
         {
             Cart c = fd.Cart.Find(CartId);
             fd.Remove(c);
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> EditFood(int id, Food food)

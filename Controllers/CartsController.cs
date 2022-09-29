@@ -128,8 +128,9 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            var response = await prod.GetFoodById(id).ConfigureAwait(false);
-            return response != null ? Ok(response) : NotFound();
+            var response = await prod.GetFoodById(id);
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
         }
         #endregion
         //[HttpPost]
@@ -144,12 +145,12 @@ namespace APIProject.Controllers
         public async Task<ActionResult<Cart>> AddtoCart(Cart C)
         {
            
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest();
-                }
-                var response = await prod.AddtoCart(C).ConfigureAwait(false);
-                return response;
+                //if (!ModelState.IsValid)
+                //{
+                //    return BadRequest();
+                //}
+                var response = await prod.AddtoCart(C);
+                return Ok(response);
                 
            
           
@@ -167,61 +168,67 @@ namespace APIProject.Controllers
 
         public async Task<ActionResult<List<Cart>>> ViewCart(int UserId)
         {
-            if (UserId <= 0)
-            {
-                return BadRequest();
-            }
+            //if (UserId <= 0)
+            //{
+            //    return BadRequest();
+            //}
             var response=await prod.GetCartById(UserId);
-            return response != null ? Ok(response) : NotFound();
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
         }
         [HttpGet("{UserId}")]
 
         public async Task<IActionResult> viewCart(int UserId)
         {
-            if (UserId <= 0)
-            {
-                return BadRequest();
-            }
+            //if (UserId <= 0)
+            //{
+            //    return BadRequest();
+            //}
             var response=await prod.ViewCart(UserId);
-            return response ? NoContent() : StatusCode(500);
+            //return response ? NoContent() : StatusCode(500);
+            return NoContent();
         }
 
         [HttpGet("Delete{CartId}")]
         public async Task<ActionResult<Cart>> Delete(int CartId)
         {
-            if (CartId <= 0)
-            {
-                return BadRequest();
-            }
-            var response = await prod.Delete(CartId).ConfigureAwait(false);
-            return response != null ? Ok(response) : NotFound();
+            //if (CartId <= 0)
+            //{
+            //    return BadRequest();
+            //}
+            var response = await prod.Delete(CartId);
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
         }
         [HttpPost("{CartId}")]
         public async Task<IActionResult> DeleteConfirmed(int CartId)
         {
-            if (CartId <= 0)
-            {
-                return BadRequest();
-            }
-            var response = await prod.DeleteConfirmed(CartId).ConfigureAwait(false);
-            return response ? NoContent() : NotFound();
+            //if (CartId <= 0)
+            //{
+            //    return BadRequest();
+            //}
+            var response = await prod.DeleteConfirmed(CartId);
+            //return response ? NoContent() : NotFound();
+            return NoContent();
         }
         [HttpDelete("EmptyList{UserId}")]
         public async Task<IActionResult> EmptyList(int UserId)
         {
-            if (UserId <= 0)
-            {
-                return BadRequest();
-            }
-            var response = await prod.EmptyList(UserId).ConfigureAwait(false);
-            return response ? NoContent() : NotFound();
+            //if (UserId <= 0)
+            //{
+            //    return BadRequest();
+            //}
+            var response = await prod.EmptyList(UserId);
+            //return response ? NoContent() : NotFound();
+            return NoContent();
         }
         [HttpGet("OrderDetails")]
 
         public async Task<ActionResult<List<OrderDetails>>> OrderDetails()
         {
-            var response = await prod.OrderDetails().ConfigureAwait(false);
-            return response != null ? Ok(response) : NotFound();
+            var response = await prod.OrderDetails();
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
         }
         [HttpGet("Buy{UserId}")]
 
@@ -229,64 +236,78 @@ namespace APIProject.Controllers
         {
 
            
-            var response = await prod.Buy(UserId).ConfigureAwait(false);
-            return response != null ? Ok(response) : NotFound();
+            var response = await prod.Buy(UserId);
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
         }
         [HttpPut("Payment{OrderId}")]
         //[HttpPost("Payment")]
 
         public async Task<ActionResult<OrderMaster>> Payment(int OrderId,OrderMaster O)
         {
-            if (!ModelState.IsValid || OrderId <= 0)
-            {
-                return BadRequest();
-            }
-            var response = await prod.Payment(OrderId, O.Type).ConfigureAwait(false);
-            return response !=null? Ok(response) : NotFound();
+            //if (!ModelState.IsValid || OrderId <= 0)
+            //{
+            //    return BadRequest();
+            //}
+            var response = await prod.Payment(OrderId, O.Type);
+            //return response !=null? Ok(response) : NotFound();
+            return Ok(response);
             
         }
         [HttpGet("On{OrderId}")]
 
         public async Task<ActionResult<OrderMaster>> On(int OrderId)
         {
-            if (OrderId <= 0)
-            {
-                return BadRequest();
-            }
-            var response = await prod.Pay(OrderId).ConfigureAwait(false);
-            return response != null ? Ok(response) : NotFound();
+            //    if (OrderId <= 0)
+            //    {
+            //        return BadRequest();
+            //    }
+            var response = await prod.Pay(OrderId);
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
         }
         [HttpPut("On{OrderId}")]
 
         public async Task<IActionResult> On(int OrderId,OrderMaster O)
         {
-
-            prod.Pay(OrderId, O);
+            //if (!ModelState.IsValid || OrderId <= 0)
+            //{
+            //    return BadRequest();
+            //}
+            var response = await prod.Pay(OrderId, O);
+            //return response ? NoContent() : NotFound();
             return NoContent();
         }
        
         [HttpGet("EditCart{CartId}")]
-        public ActionResult<Cart> EditCart(int CartId)
+        public async Task<ActionResult<Cart>> EditCart(int CartId)
         {
+            //if (CartId <= 0)
+            //{
+            //    return BadRequest();
+            //}
+            var response = await prod.GetCartByCartId(CartId);
+            //return response != null ? Ok(response) : NotFound();
+            return Ok(response);
 
-            return prod.GetCartByCartId(CartId);
         }
         [HttpPut("Edit{CartId}")]
-        public IActionResult Edit(int CartId,Cart C)
+        public async Task<IActionResult> Edit(int CartId,Cart C)
         {
-            prod.Edit(CartId,C);
+            await prod.Edit(CartId,C);
             return NoContent();
         }
         [HttpGet("DCart{CartId}")]
-        public ActionResult<Cart> DeleteCart(int CartId)
+        public async Task<ActionResult<Cart>> DeleteCart(int CartId)
         {
 
-            return prod.GetCartByCartId(CartId);
+            var response=await prod.GetCartByCartId(CartId);
+            return Ok(response);
         }
         [HttpDelete("Delete{CartId}")]
-        public IActionResult DeleteCartConfirmed(int CartId)
+        public async Task<IActionResult> DeleteCartConfirmed(int CartId)
         {
-            prod.DeleteCart(CartId);
+           await prod.DeleteCart(CartId);
             return NoContent();
         }
        

@@ -31,9 +31,10 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            await prod.AddNewUser(userList).ConfigureAwait(false);
+            await prod.AddNewUser(userList);
+            //prod.AddNewUser(userList);
 
-            
+
             return userList;
         }
 
@@ -48,7 +49,7 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            UserList user=await prod.Login(userList).ConfigureAwait(false);
+            UserList user=await prod.Login(userList);
             return user;
         }
     }
