@@ -14,13 +14,13 @@ namespace APIProject.Provider
         public  Task<List<Food>> GetAll();
         public Task<Food> GetFoodById(int? id);
 
-        public Cart AddtoCart(Cart C);
-        public List<Cart> GetCartById(int UserId);
-        public void ViewCart(int? UserId);
-        public Cart Delete(int CartId);
+        public Task<Cart> AddtoCart(Cart C);
+        public Task<List<Cart>> GetCartById(int UserId);
+        public Task<bool> ViewCart(int? UserId);
+        public Task<Cart> Delete(int CartId);
         public Task<NewOrder> DispatchNewOrder(int Id);
-        public void DeleteConfirmed(int CartId);
-        public void EmptyList(int UserId);
+        public Task<bool> DeleteConfirmed(int CartId);
+        public Task<bool> EmptyList(int UserId);
         public Task<bool> EmptyOrder(int OrderId);
 
         public List<OrderDetails> OrderDetails();

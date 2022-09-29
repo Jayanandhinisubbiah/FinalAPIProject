@@ -64,20 +64,21 @@ namespace APIProject.Provider
             //return o;
         }
 
-        public Cart Delete(int CartId)
+        public async Task<Cart> Delete(int CartId)
         {
-            return (fd.Cart.FirstOrDefault(m => m.CartId == CartId));
+            return await (fd.Cart.FirstOrDefaultAsync(m => m.CartId == CartId));
 
         }
 
-        public void DeleteConfirmed(int CartId)
+        public async Task<bool> DeleteConfirmed(int CartId)
         {
             //var val = ;
             fd.Cart.Remove(fd.Cart.Find(CartId));
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
+            return true;
         }
 
-        public void EmptyList(int UserId)
+        public async Task<bool> EmptyList(int UserId)
         {
             List<Cart> list = (from i in fd.Cart
                                where i.UserId == UserId
@@ -88,6 +89,7 @@ namespace APIProject.Provider
                 fd.Cart.Remove(val);
                 fd.SaveChanges();
             }
+            return true;
         }
 
         public async Task<List<Food>> GetAll()
@@ -103,11 +105,11 @@ namespace APIProject.Provider
 
         }
 
-        public List<Cart> GetCartById(int UserId)
+        public async Task<List<Cart>> GetCartById(int UserId)
         {
-            return (from i in fd.Cart.Include(x => x.Food)
+            return await (from i in fd.Cart.Include(x => x.Food)
                     where i.UserId == UserId
-                    select i).ToList();
+                    select i).ToListAsync();
 
 
         }
@@ -163,7 +165,7 @@ namespace APIProject.Provider
             return result;
         }
 
-        public void ViewCart(int? UserId)
+        public async Task<bool> ViewCart(int? UserId)
         {
 
             List<Cart> list = (from i in fd.Cart
@@ -197,7 +199,8 @@ namespace APIProject.Provider
             }
             orderDetails.AddRange(fd.OrderDetails);
             orderMaster.TotalPrice = orderDetails.Sum(i => i.TotalPrice);
-            fd.SaveChanges();
+            await fd.SaveChangesAsync();
+            return true;
         }
         public async Task<Food> AddNewFood(Food food)
         {
