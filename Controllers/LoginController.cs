@@ -31,7 +31,7 @@ namespace APIProject.Controllers
             {
                 return BadRequest();
             }
-            await prod.AddNewUser(userList);
+            /*await*/ await prod.AddNewUser(userList);
             //prod.AddNewUser(userList);
 
 

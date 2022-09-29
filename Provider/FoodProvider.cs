@@ -18,9 +18,10 @@ namespace APIProject.Provider
 
         public async Task<UserList> AddNewUser(UserList U)
         {
-            fd.UserList.Add(U);
-            await fd.SaveChangesAsync();
+             fd.UserList.Add(U);
+             await fd.SaveChangesAsync();
             return U;
+           
         }
         #region
         //public Cart AddtoCart(int Qnt, int FoodId, int UserId)
