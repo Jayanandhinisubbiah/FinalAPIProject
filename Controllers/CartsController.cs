@@ -124,10 +124,10 @@ namespace APIProject.Controllers
         [HttpGet("AddtoCart{id}")]
         public async Task<ActionResult<Food>> AddtoCart(int? id)
         {
-            if (id <= 0)
-            {
-                return BadRequest();
-            }
+            //if (id <= 0)
+            //{
+            //    return BadRequest();
+            //}
             var response = await prod.GetFoodById(id);
             //return response != null ? Ok(response) : NotFound();
             return Ok(response);
@@ -173,8 +173,8 @@ namespace APIProject.Controllers
             //    return BadRequest();
             //}
             var response=await prod.GetCartById(UserId);
-            //return response != null ? Ok(response) : NotFound();
-            return Ok(response);
+            return response != null ? Ok(response) : NotFound();
+            //return Ok(response);
         }
         [HttpGet("{UserId}")]
 
@@ -200,7 +200,7 @@ namespace APIProject.Controllers
             //return response != null ? Ok(response) : NotFound();
             return Ok(response);
         }
-        [HttpPost("{CartId}")]
+        [HttpDelete("{CartId}")]
         public async Task<IActionResult> DeleteConfirmed(int CartId)
         {
             //if (CartId <= 0)
@@ -208,8 +208,8 @@ namespace APIProject.Controllers
             //    return BadRequest();
             //}
             var response = await prod.DeleteConfirmed(CartId);
-            //return response ? NoContent() : NotFound();
-            return NoContent();
+            return response ? NoContent() : NotFound();
+            //return NoContent();
         }
         [HttpDelete("EmptyList{UserId}")]
         public async Task<IActionResult> EmptyList(int UserId)
@@ -219,16 +219,16 @@ namespace APIProject.Controllers
             //    return BadRequest();
             //}
             var response = await prod.EmptyList(UserId);
-            //return response ? NoContent() : NotFound();
-            return NoContent();
+            return response ? NoContent() : NotFound();
+            //return NoContent();
         }
         [HttpGet("OrderDetails")]
 
         public async Task<ActionResult<List<OrderDetails>>> OrderDetails()
         {
             var response = await prod.OrderDetails();
-            //return response != null ? Ok(response) : NotFound();
-            return Ok(response);
+            return response != null ? Ok(response) : NotFound();
+            //return Ok(response);
         }
         [HttpGet("Buy{UserId}")]
 

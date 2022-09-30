@@ -34,13 +34,13 @@ namespace APIProject.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Food>> GetFoodById(int id)
         {
-           
-            if(id<=0)
+
+            if (id <= 0)
             {
                 return BadRequest();
             }
             var response = await prod.GetFoodById(id);
-            return response!=null?Ok(response):NotFound();
+            return response != null ? Ok(response) : NotFound();
 
         }
 
@@ -90,8 +90,14 @@ namespace APIProject.Controllers
         {
             var response = await prod.ViewNewOrder().ConfigureAwait(false);
             return response != null ? Ok(response) : NotFound();
+
         }
-        
+        //public async Task<IActionResult> GetNewOrder()
+        //{
+        //    var response=await prod.ViewNewOrder().ConfigureAwait(false);
+        //    return Ok(response);
+        //}
+
         [HttpGet("DispatchNewOrder{Id}")]
         public async Task<ActionResult<NewOrder>> DispatchNewOrder(int Id)
         {
