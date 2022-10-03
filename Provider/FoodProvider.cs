@@ -103,7 +103,7 @@ namespace APIProject.Provider
 
         }
 
-        public async Task<List<Cart>> GetCartById(int UserId)
+        public async Task<List<Cart>> GetCartByUserId(int UserId)
         {
             return await (from i in fd.Cart.Include(x => x.Food)
                     where i.UserId == UserId

@@ -172,7 +172,7 @@ namespace APIProject.Controllers
             //{
             //    return BadRequest();
             //}
-            var response=await prod.GetCartById(UserId);
+            var response=await prod.GetCartByUserId(UserId);
             return response != null ? Ok(response) : NotFound();
             //return Ok(response);
         }

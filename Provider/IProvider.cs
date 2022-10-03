@@ -15,7 +15,7 @@ namespace APIProject.Provider
         public Task<Food> GetFoodById(int? id);
 
         public Task<Cart> AddtoCart(Cart C);
-        public Task<List<Cart>> GetCartById(int UserId);
+        public Task<List<Cart>> GetCartByUserId(int UserId);
         public Task<bool> ViewCart(int? UserId);
         public Task<Cart> Delete(int CartId);
         public Task<NewOrder> DispatchNewOrder(int Id);
